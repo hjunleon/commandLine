@@ -1,20 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Presentational from './App';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider, connect } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import rootReducer from './reducers'
-//import rootReducer from 'redux'
 
- const store = createStore(rootReducer);
+//import rootReducer from 'redux'
+const messageReducer = (state = [], action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+ const store = createStore(messageReducer);
 //const Provider = ReactRedux.Provider;
 //const connect = ReactRedux.connect;
 const mapStateToProps = (state) => {
   return {
-    messages: state
+    messages: state 
   }
 };
 const addMessage = (message) => {
@@ -30,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 };
-const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational)
+const Container = connect(mapStateToProps, mapDispatchToProps)(App)
  /*ReactDOM.render(
    <Provider store={store}>
      <App/>
