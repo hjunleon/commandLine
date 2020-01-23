@@ -29,6 +29,9 @@ class CmdItem extends React.Component{
     this.props.toFocus();
     // toggle the cursor blinking based on this state
   }
+  handleUnfocus(){
+    this.props.toUnfocus();
+  }
   render(){
     return(
           <div>[user@server ~]$
@@ -54,10 +57,18 @@ function Presentational() {
     this.onEnter = this.onEnter.bind(this)
   }
   onEnter(event) {
-    if(e.keyCode == 13 && this.state.isFocused == true){
-      this.setState({
+    if(e.keyCode == 13){
+      /*this.setState({
         cmdSoFar: event.target.value
-      });
+      });*/
+      if(this.state.isFocused == true){
+
+      } else {
+        /*
+        this.setState({
+          isFocused: true
+        });*/
+      }
     }
 
   } // if not focused on input, then pressing enter would cause it refocus
