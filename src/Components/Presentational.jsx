@@ -62,7 +62,7 @@ function Presentational() {
         cmdSoFar: event.target.value
       });*/
       if(this.state.isFocused == true){
-
+        
       } else {
         /*
         this.setState({

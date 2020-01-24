@@ -5,8 +5,11 @@ import Presentational from '../Components/Presentational'
 const cmds = ['ls', 'echo' ,'mkdir' , 'grep', 'man', 'pwd' , 'cd' , 'mv' ,
  'rmdir', 'cat' , 'exit' , 'clear', 'kill', 'sleep']
 
-const processCommand = (input) => {
+const processCommand = (input,action) => {
   //validate if is legit command with a bunch of switch cases; dumb idea, either dict or array
+  switch(action){
+    case:
+  }
   let call = //split at the first space
   if(cmds.indexOf(input) != -1){
 
@@ -30,9 +33,10 @@ const nextCommand = () => {
 const mapStateToProps = (state) => {
   let pcRES = processCommand(state.curCMD)
   return {
-    cmdSoFar: pcRES[0],
-    reply: pcRES[1]
-
+    cmdSoFar: pcRES[0], //to keep in the input
+    reply: pcRES[1],  // to append to next line
+    cmdReply:        , // not a prop
+    isCursorBlinking:       //  to tell input to have blinking cursor
   }
 };
 

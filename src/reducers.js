@@ -7,26 +7,29 @@ const initialState = {
 function toExec(state = [], action){
   switch(action.type) {
     case actions[0]:
-      return [...state,{
-        input: action.input,
 
-      }]
+    case actions[1]:
+      state.curIndex += 1
+      return state.cmdReply[state.curIndex]
+    case actions[2]:
+      state.curIndex -= 1
+      return state.cmdReply[state.curIndex]
+    case actions[3]:
+
+    case actions[4]:
+      if (state.isFocused){
+        return toExec(state.cmdSoFar, PROCESS_CMD)
+      } else {
+        return state.isFocused = true
+      }
     default:
       return state
   }
 }
 
-function toHint
-
-function goUp
-
-function goDown
 
 const cmdLine = combineReducers({
-  toExec,
-  toHint,
-  goUp,
-  goDown
+  toExec
 })
 
 
