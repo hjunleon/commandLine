@@ -14,12 +14,12 @@ const messageReducer = (state = [], action) => {
       return state;
   }
 };
- const store = createStore(messageReducer);
+ const store = createStore(cmdLine);
 //const Provider = ReactRedux.Provider;
 //const connect = ReactRedux.connect;
 const mapStateToProps = (state) => {
   return {
-    messages: state 
+    messages: state
   }
 };
 const addMessage = (message) => {

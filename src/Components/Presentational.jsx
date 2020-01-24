@@ -13,29 +13,58 @@ class CmdLineStart extends React.Component{
   );
 }
 }
+class CmdReplies extends React.Component{
+  render(){
+    return(
+          <div>
+            <div>[user@server ~]${this.props.cmdReplies[0]}</div>
+            <div>{this.props.cmdReplies[1]}</div>
+          </div>
+    );
+  }
+}
 class CmdItem extends React.Component{
   constructor(props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
     this.handleFocus = this.handleFocus.bind(this)
     this.handleUnfocus = this.handleUnfocus.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
   }
   handleChange(event) {
     this.setState({
-      cmdSoFar: event.target.value
+      curCMD: event.target.value
     });
   } // if not focused on input, then pressing enter would cause it refocus
   handleFocus(){
-    this.props.toFocus();
     // toggle the cursor blinking based on this state
+    this.setState({
+        isFocused: true
+    })
   }
   handleUnfocus(){
-    this.props.toUnfocus();
+  //  this.props.toUnfocus();
+    this.setState({
+        isFocused: true
+    })
+  }
+  handleKeyPress(){
+    if(e.keyCode == 9 || e.which == 9){
+      // by right state should be focused but leave here for debug reasons
+      if(this.state.isFocused == true){
+        this.prop.sendForExec(this.state.curCMD)
+        this.setState({
+          curCMD: ''
+        })
+      } else {
+        this.prop.refocus()
+      }
+    }
   }
   render(){
     return(
           <div>[user@server ~]$
-            <input value = {this.props.cmdSoFar} onChange = {this.handleChange} onfocus = {this.handleFocus} onfocusout = {this.handleUnfocus} />
+            <input value = {this.prop.curCMD} onChange = {this.handleChange} onfocus = {this.handleFocus} onfocusout = {this.handleUnfocus} onkeyup = {this.handleKeyPress} />
           </div>
     );
   }
@@ -44,30 +73,30 @@ class CmdLineBody extends React.Component{
   render(){
     return(
         <div>
+            {this.prop.allCmdReplies.map(x=>(
+              <CmdReplies cmdReplies=x/>
+            ))}
             <CmdItem />
         </div>
     );
   }
 }
 //difference between react func and class?
-function Presentational() {
+class Presentational() extends React.Component{
 
   constructor(props) {
     super(props)
     this.onEnter = this.onEnter.bind(this)
   }
   onEnter(event) {
-    if(e.keyCode == 13){
-      /*this.setState({
-        cmdSoFar: event.target.value
-      });*/
+    if(e.keyCode == 13 || e.which == 13){
       if(this.state.isFocused == true){
-        
-      } else {
-        /*
+        this.prop.sendForExec(this.state.curCMD)
         this.setState({
-          isFocused: true
-        });*/
+          curCMD: ''
+        })
+      } else {
+        this.prop.refocus()
       }
     }
 
@@ -75,7 +104,7 @@ function Presentational() {
   return (
     <div className="App">
       <header className="App-header">
-        <div id="cmdWindow">
+        <div id="cmdWindow" onkeyup = {this.onEnter}>
           <CmdLineStart/ >
           <CmdLineBody/ >
         </div>

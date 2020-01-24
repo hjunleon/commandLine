@@ -1,43 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Presentational from './App';
-import * as serviceWorker from './serviceWorker';
-import { Provider, connect } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import rootReducer from './reducers'
+import App from './components/App'
 //import rootReducer from 'redux'
 
  const store = createStore(rootReducer);
+ render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
 //const Provider = ReactRedux.Provider;
 //const connect = ReactRedux.connect;
-const mapStateToProps = (state) => {
-  return {
-    messages: state
-  }
-};
-const addMessage = (message) => {
-  return {
-    type: 'ADD',
-    message: message
-  }
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    submitNewMessage: (message) => {
-      dispatch(addMessage(message));
-    }
-  }
-};
-const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational)
  /*ReactDOM.render(
    <Provider store={store}>
      <App/>
    </Provider>,
    document.getElementById('root')
  );
-ReactDOM.render(<AppWrapper />, document.getElementById('root'));*/
+ReactDOM.render(<AppWrapper />, document.getElementById('root'));
 class AppWrapper extends React.Component{
 	render(){
 		return (
@@ -47,8 +31,9 @@ class AppWrapper extends React.Component{
 		);
 	}
 }
-ReactDOM.render(<AppWrapper />, document.getElementById('root'));
+ReactDOM.render(<AppWrapper />, document.getElementById('root'));*/
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
+
 serviceWorker.unregister();
