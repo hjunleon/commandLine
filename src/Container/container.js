@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
-import {processCMD, prevCMD} from '../actions'
-import Presentational from '../Components/Presentational'
+import {processCMD, prevCMD, autocomCMD,refocusOnEnter} from '../actions'
+import {Presentational,CmdItem,CmdLineBody} from '../Components/Presentational'
 
 const cmds = ['ls', 'echo' ,'mkdir' , 'grep', 'man', 'pwd' , 'cd' , 'mv' ,
  'rmdir', 'cat' , 'exit' , 'clear', 'kill', 'sleep']
@@ -31,11 +31,13 @@ const nextCommand = () => {
 
 }*/
 const cmdInputMSTP = (state) => {
+  console.log("cmdInputMSTP")
+  console.log(state)
   return {
-    curCMD: '', //to keep in the input
+    curCMD: state.toExec.curCMD, //to keep in the input
     //reply: pcRES[1],  // to append to next line
 
-    isCursorBlinking:  state.isFocused,//  to tell input to have blinking cursor
+    isCursorBlinking:  state.toExec.isFocused,//  to tell input to have blinking cursor
   }
 };
 
@@ -43,38 +45,42 @@ const cmdInputMDTP = (dispatch) => {
   return {
     sendForAutoCom: (curCMD) => {
       dispatch(autocomCMD(curCMD))
+    },
+    sendForExec: (curCMD) => {
+      dispatch(processCMD(curCMD))
     }
   }
 }
-/*
-const cmdInput = (dispatch) => {
-  return {
-    submitNewMessage: (message) => {
-      dispatch(processCMD(message))
-    }
-  }
-};*/
 
 
 const cmdBodyMSTP = (state) => {
-  //let pcRES = processCommand(state.curCMD)
-  return {
-    allCmdReplies: state.cmdReply
-  }
+  console.log("cmdBodyMSTP")
+    console.log(state)
+    return {
+      allCmdReplies: state.toExec.cmdReply
+    }
 };
 
+const presentationalMSTP = state => {
+  console.log("presentationalMSTP")
+  console.log(state)
+  return {
+    //allCmdReplies: state.toExec.cmdReply,
+    isFocused: state.toExec.isFocused,
+    curIndex: state.toExec.curIndex,
+    //curCMD: state.toExec.curCMD
+  }
+}
 const presentationalMDTP = (dispatch) => {
   return {
-    sendForExec: (curCMD) => {
-      dispatch(processCMD(curCMD))
-    },
     refocus: () => {
       dispatch(refocusOnEnter())
     }
   }
 }
 
-const cmdInputConnect = connect(cmdInputMSTP)(CmdItem)
-const cmdBodyConnect = connect(cmdBodyMSTP)(CmdLineBody)
-const presentationalConnect = connect(null,presentationalMDTP)(Presentational)
+
+const presentationalConnect = connect(presentationalMSTP,presentationalMDTP)(Presentational)
+const cmdBodyConnect = connect(cmdBodyMSTP,null)(CmdLineBody)
+const cmdInputConnect = connect(cmdInputMSTP,cmdInputMDTP)(CmdItem)
 export {cmdInputConnect,cmdBodyConnect, presentationalConnect}

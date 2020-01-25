@@ -3,9 +3,15 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './reducers'
-import App from './components/App'
+import App from './Components/App'
+import * as serviceWorker from './serviceWorker'
 //import rootReducer from 'redux'
-
+/*const initState = {
+  cmdReply: ['wefwef'],
+  curCMD: "",
+  curIndex: 0,
+  isFocused:true
+}*/
  const store = createStore(rootReducer);
  render(
   <Provider store={store}>

@@ -4,11 +4,18 @@ import {PROCESS_CMD, PREV_CMD, NEXT_CMD, AUTOCOM_CMD, REFOCUS} from './actions'
 const cmds = ['ls', 'echo' ,'mkdir' , 'grep', 'man', 'pwd' , 'cd' , 'mv' ,
  'rmdir', 'cat' , 'exit' , 'clear', 'kill', 'sleep']
 
+const initState = {
+  cmdReply: [],
+  curCMD: "",
+  curIndex: 0,
+  isFocused:true
+}
 
-function toExec(state = [], action){
+function toExec(state = initState, action){
+  //console.log("toExecReducer")
   switch(action.type) {
     case PROCESS_CMD:
-
+      return state
     case NEXT_CMD:
       state.curIndex += 1
       state.curCMD = state.cmdReply[state.curIndex]
@@ -26,11 +33,12 @@ function toExec(state = [], action){
         return state.isFocused = true
       }*/
     default:
+      //console.log(state)
       return state
   }
 }
 
-function refocusReducer(state = [], action) => {
+function refocusReducer(state = initState.isFocused, action){
   switch (action.type) {
     case REFOCUS:
       state.isFocused = true
