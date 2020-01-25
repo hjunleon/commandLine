@@ -81,28 +81,29 @@ class CmdItem extends React.Component{
 class CmdLineBody extends React.Component{
 
   render(){
+    console.log("CmdLineBody")
+    console.log(this.props)
     return(
         <div>
-            { console.log("CmdLineBody"),
-            console.log(this.props),
+            {
               this.props.allCmdReplies.map(x=>(
 
               <CmdReplies cmdReplies={x}/>
             ))}
-            <CmdItem /*curCMD = {""}*//>
+            <CmdItem curCMD = {"qwdqwd"}/>
         </div>
     );
   }
 }
 //difference between react func and class?
 class Presentational extends React.Component{
-
+/*
   constructor(props) {
     super(props)
     this.onEnter = this.onEnter.bind(this)
     console.log("Presentational");
     console.log(this.props)
-  }
+  }*/
   onEnter(event) {
 
     if(event.keyCode == 13 || event.which == 13){
@@ -119,7 +120,7 @@ class Presentational extends React.Component{
       <header className="App-header">
         <div id="cmdWindow" onKeyUp = {this.onEnter}>
           <CmdLineStart/ >
-          <CmdLineBody   />
+          <CmdLineBody allCmdReplies = {['qwdqwd']}  />
         </div>
       </header>
     </div>
