@@ -50,4 +50,11 @@ color: transparent;
 text-shadow: 0 0 0 #ffbf00;
 outline: none;
 font: inherit;
+display:inline-block;
+}
+#blinkingCursor{
+  background-color:white;
+  width:10px;
+  height:100%;
+  display:inline-block;
 }

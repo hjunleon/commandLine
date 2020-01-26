@@ -76,8 +76,10 @@ class CmdItem extends React.Component{
   render(){
     return(
           <div>[user@server ~]$
-            <input id="userInput" value = {this.state.curCMD} onChange = {this.handleChange}onKeyUp = {this.handleKeyPress}
-             onFocus = {this.handleFocus} onBlur = {this.handleUnfocus} />
+            <div id="userInput" value = {this.state.curCMD} onChange = {this.handleChange}onKeyUp = {this.handleKeyPress}
+             onFocus = {this.handleFocus} onBlur = {this.handleUnfocus} contentEditable = "true">
+             </div>
+            <div id="blinkingCursor">d</div>
           </div>
     );
   }
