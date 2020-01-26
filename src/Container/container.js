@@ -30,6 +30,7 @@ const nextCommand = () => {
 
 
 }*/
+/*
 const cmdInputMSTP = (state) => {
   console.log("cmdInputMSTP")
   console.log(state)
@@ -51,13 +52,15 @@ const cmdInputMDTP = (dispatch) => {
     }
   }
 }
-
+*/
 
 const cmdBodyMSTP = (state) => {
   console.log("cmdBodyMSTP")
     console.log(state)
     return {
-      allCmdReplies: state.toExec.cmdReply
+      allCmdReplies: state.toExec.cmdReply,
+      curCMD: state.toExec.curCMD,
+      isFocused: state.toExec.isFocused
     }
 };
 
@@ -66,21 +69,28 @@ const presentationalMSTP = state => {
   console.log(state)
   return {
     //allCmdReplies: state.toExec.cmdReply,
-    isFocused: state.toExec.isFocused,
-    curIndex: state.toExec.curIndex,
+    //isFocused: state.toExec.isFocused,
+    //curIndex: state.toExec.curIndex,
     //curCMD: state.toExec.curCMD
+    body: state
   }
 }
 const presentationalMDTP = (dispatch) => {
   return {
     refocus: () => {
       dispatch(refocusOnEnter())
+    },
+    sendForAutoCom: (curCMD) => {
+      dispatch(autocomCMD(curCMD))
+    },
+    sendForExec: (curCMD) => {
+      dispatch(processCMD(curCMD))
     }
   }
 }
 
 
-const presentationalConnect = connect(presentationalMSTP,presentationalMDTP)(Presentational)
-const cmdBodyConnect = connect(cmdBodyMSTP,null)(CmdLineBody)
-const cmdInputConnect = connect(cmdInputMSTP,cmdInputMDTP)(CmdItem)
-export {cmdInputConnect,cmdBodyConnect, presentationalConnect}
+const PresentationalConnect = connect(presentationalMSTP,presentationalMDTP)(Presentational)
+//const CmdBodyConnect = connect(cmdBodyMSTP,null)(CmdLineBody)
+//const cmdInputConnect = connect(cmdInputMSTP,cmdInputMDTP)(CmdItem)
+export default PresentationalConnect

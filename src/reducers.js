@@ -7,8 +7,7 @@ const cmds = ['ls', 'echo' ,'mkdir' , 'grep', 'man', 'pwd' , 'cd' , 'mv' ,
 const initState = {
   cmdReply: [],
   curCMD: "",
-  curIndex: 0,
-  isFocused:true
+  curIndex: 0
 }
 
 function toExec(state = initState, action){
@@ -38,7 +37,7 @@ function toExec(state = initState, action){
   }
 }
 
-function refocusReducer(state = initState.isFocused, action){
+function refocusReducer(state = true, action){
   switch (action.type) {
     case REFOCUS:
       state.isFocused = true

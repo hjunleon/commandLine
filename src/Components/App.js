@@ -1,10 +1,8 @@
 import React from 'react'
-import * as Containerized from '../Container/container'
+import Display from '../Container/container'
 const App = () => (
   <div>
-    <Containerized.presentationalConnect />
-  //  <Containerized.cmdInputConnect />
-  //  <Containerized.cmdBodyConnect />
+    <Display />
   </div>
 )
 export default App
